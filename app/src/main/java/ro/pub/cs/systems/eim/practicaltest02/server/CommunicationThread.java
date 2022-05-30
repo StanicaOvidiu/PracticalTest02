@@ -52,18 +52,6 @@ class CommunicationThread extends Thread {
 
             Log.v(Constants.TAG, "Received a request for " + currencyType + " currency");
 
-            /*
-            if (currencyType.equals("EUR")) {
-                if (eurCache == null) {
-                    updateCacheFor(currencyType);
-                }
-
-
-            } else {
-
-            }*/
-
-
             HttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet("https://api.coindesk.com/v1/bpi/currentprice/EUR.json");
             String jsonContent = httpClient.execute(httpGet, new BasicResponseHandler());
@@ -100,9 +88,5 @@ class CommunicationThread extends Thread {
         } catch (IOException ioException) {
             Log.e(Constants.TAG, "Communication Error: " + ioException.getMessage());
         }
-    }
-
-    private void updateCacheFor(String currencyType) {
-
     }
 }
