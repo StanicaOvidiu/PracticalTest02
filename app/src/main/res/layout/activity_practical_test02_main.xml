@@ -67,9 +67,9 @@
             android:layout_height="wrap_content"
             android:hint="Server Port"/>
 
-        <Spinner
-            android:id="@+id/currency_spinner"
-            android:entries="@array/currencies_array"
+        <EditText
+            android:id="@+id/currency_edit_text"
+            android:hint="EUR/USD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -87,7 +87,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/weather_forecast_text_view"
+            android:id="@+id/currency_value_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="10"/>

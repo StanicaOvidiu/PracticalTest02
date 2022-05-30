@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import ro.pub.cs.systems.eim.practicaltest02.client.ClientAsyncTask;
 import ro.pub.cs.systems.eim.practicaltest02.server.ServerThread;
@@ -18,8 +18,9 @@ public class PracticalTest02MainActivity extends AppCompatActivity {
     private Button startServerButton;
     private EditText clientAddressEditText;
     private EditText clientPortEditText;
-    private Spinner currencySpinner;
+    private EditText currencyEditText;
     private Button submitButton;
+    private TextView currencyValueTextView;
 
 
     @Override
@@ -45,15 +46,28 @@ public class PracticalTest02MainActivity extends AppCompatActivity {
         startServerButton = (Button) findViewById(R.id.start_server_button);
         clientAddressEditText = (EditText) findViewById(R.id.client_address_edit_text);
         clientPortEditText = (EditText) findViewById(R.id.client_port_edit_text);
-        currencySpinner = (Spinner) findViewById(R.id.currency_spinner);
+        currencyEditText = (EditText) findViewById(R.id.currency_edit_text);
         submitButton = (Button) findViewById(R.id.submit_button);
+        currencyValueTextView = (TextView) findViewById(R.id.currency_value_text_view);
     }
 
     private void setupClient() {
         submitButton.setOnClickListener(view -> {
-            new ClientAsyncTask().execute(
-                    clientAddressEditText.getText().toString(),
-                    clientPortEditText.getText().toString()
+            String address, port, currencyType;
+            try {
+                address = clientAddressEditText.getText().toString();
+                port = clientPortEditText.getText().toString();
+                currencyType = currencyEditText.getText().toString();
+                if (!currencyType.equals("EUR") && !currencyType.equals("USD")) {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Invalid Client input");
+                return;
+            }
+
+            new ClientAsyncTask(currencyValueTextView).execute(
+                    address, port, currencyType
             );
         });
     }
